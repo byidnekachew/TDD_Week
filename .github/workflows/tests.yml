@@ -1,0 +1,19 @@
+name: Run testing suite
+on: push
+
+jobs: 
+  test: 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with: 
+          python-version: "3.11"
+      - name: Installs dependencies
+        run: pip install pytest pytest-cov flake8
+      - name: Runs tests
+        run: pytest --cov=score --cov=health --cov=inventory --cov-fail-under=85
+      - name: Runs flake8
+        run: flake8 .
+    
